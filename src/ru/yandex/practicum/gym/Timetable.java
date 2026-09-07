@@ -16,10 +16,10 @@ public class Timetable {
     public void addNewTrainingSession(TrainingSession trainingSession) {
         //новая тренировка
         //сохраняем занятие в расписании
-        DayOfWeek day = trainingSession.getDayOfWeek();
+        String dayKey = trainingSession.getDayOfWeek().name();
         TimeOfDay time = trainingSession.getTimeOfDay();
 
-        TreeMap<TimeOfDay, List<TrainingSession>> dayShedule = timetable.get(day);
+        TreeMap<TimeOfDay, List<TrainingSession>> dayShedule = timetable.get(dayKey);
 
         List<TrainingSession> sessions = dayShedule.get(time);
 
