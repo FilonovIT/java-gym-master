@@ -33,10 +33,14 @@ public class Timetable {
     public List<TrainingSession> getTrainingSessionsForDay(DayOfWeek dayOfWeek) {
         //тренировки за день
         //как реализовать, тоже непонятно, но сложность должна быть О(1)
-        TreeMap<TimeOfDay, List<TrainingSession>> dayShedule = timetable.get(dayOfWeek);
+        String dayKey = dayOfWeek.name();
+        TreeMap<TimeOfDay, List<TrainingSession>> dayShedule = timetable.get(dayKey);
+
+        if (dayShedule == null) {
+            return Collections.emptyList();
+        }
 
         List<TrainingSession> result = new ArrayList<>();
-
         for (List<TrainingSession> sessions : dayShedule.values()) {
             result.addAll(sessions);
         }
@@ -45,7 +49,14 @@ public class Timetable {
 
     public List<TrainingSession> getTrainingSessionsForDayAndTime(DayOfWeek dayOfWeek, TimeOfDay timeOfDay) {
         //как реализовать, тоже непонятно, но сложность должна быть О(1)
-        TreeMap<TimeOfDay, List<TrainingSession>> dayShedule = timetable.get(dayOfWeek);
+
+        String dayKey = dayOfWeek.name();
+        TreeMap<TimeOfDay, List<TrainingSession>> dayShedule = timetable.get(dayKey);
+
+        if (dayShedule == null) {
+            return Collections.emptyList();
+        }
+
         List<TrainingSession> sessions = dayShedule.get(timeOfDay);
         return sessions != null ? new ArrayList<>(sessions) : Collections.emptyList();
     }
