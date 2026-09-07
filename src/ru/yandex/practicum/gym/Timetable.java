@@ -9,7 +9,7 @@ public class Timetable {
     public Timetable() {
         timetable = new HashMap<>();
         for (DayOfWeek day : DayOfWeek.values()) {
-            timetable.put(String.valueOf(day), new TreeMap<>());
+            timetable.put(day, new TreeMap<>());
         }
     }
 
