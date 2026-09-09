@@ -4,10 +4,10 @@ import java.util.*;
 
 public class Timetable {
 
-    private Map<String, TreeMap<TimeOfDay, List<TrainingSession>>> timetable = new HashMap<>();
+    private final Map<String, TreeMap<TimeOfDay, List<TrainingSession>>> timetable = new HashMap<>();
 
     public Timetable() {
-        timetable = new HashMap<>();
+        //timetable = new HashMap<>();
         for (DayOfWeek day : DayOfWeek.values()) {
             timetable.put(day.name(), new TreeMap<>());
         }
