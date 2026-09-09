@@ -4,17 +4,60 @@ import java.util.*;
 
 public class Timetable {
 
-    private /* как это хранить??? */ timetable;
+    private final Map<String, TreeMap<TimeOfDay, List<TrainingSession>>> timetable = new HashMap<>();
+
+    public Timetable() {
+        //timetable = new HashMap<>();
+        for (DayOfWeek day : DayOfWeek.values()) {
+            timetable.put(day.name(), new TreeMap<>());
+        }
+    }
 
     public void addNewTrainingSession(TrainingSession trainingSession) {
+        //новая тренировка
         //сохраняем занятие в расписании
+        String dayKey = trainingSession.getDayOfWeek().name();
+        TimeOfDay time = trainingSession.getTimeOfDay();
+
+        TreeMap<TimeOfDay, List<TrainingSession>> dayShedule = timetable.get(dayKey);
+
+        List<TrainingSession> sessions = dayShedule.get(time);
+
+        if (sessions == null) {
+            sessions = new ArrayList<>();
+            dayShedule.put(time, sessions);
+        }
+        sessions.add(trainingSession);
     }
 
-    public /* непонятно, что возвращать */ getTrainingSessionsForDay(DayOfWeek dayOfWeek) {
+    public List<TrainingSession> getTrainingSessionsForDay(DayOfWeek dayOfWeek) {
+        //тренировки за день
         //как реализовать, тоже непонятно, но сложность должна быть О(1)
+        String dayKey = dayOfWeek.name();
+        TreeMap<TimeOfDay, List<TrainingSession>> dayShedule = timetable.get(dayKey);
+
+        if (dayShedule == null) {
+            return Collections.emptyList();
+        }
+
+        List<TrainingSession> result = new ArrayList<>();
+        for (List<TrainingSession> sessions : dayShedule.values()) {
+            result.addAll(sessions);
+        }
+        return result;
     }
 
-    public /* непонятно, что возвращать */ getTrainingSessionsForDayAndTime(DayOfWeek dayOfWeek, TimeOfDay timeOfDay) {
+    public List<TrainingSession> getTrainingSessionsForDayAndTime(DayOfWeek dayOfWeek, TimeOfDay timeOfDay) {
         //как реализовать, тоже непонятно, но сложность должна быть О(1)
+
+        String dayKey = dayOfWeek.name();
+        TreeMap<TimeOfDay, List<TrainingSession>> dayShedule = timetable.get(dayKey);
+
+        if (dayShedule == null) {
+            return Collections.emptyList();
+        }
+
+        List<TrainingSession> sessions = dayShedule.get(timeOfDay);
+        return sessions != null ? new ArrayList<>(sessions) : Collections.emptyList();
     }
 }
